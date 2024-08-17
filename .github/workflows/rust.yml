@@ -16,6 +16,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        brew install opencv llvm
+        
+        echo 'export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
+        export LDFLAGS=-L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib
+        export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib' >> ~/.zshrc
     
     - name: Build
       run: cargo build --release
